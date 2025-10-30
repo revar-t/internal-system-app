@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use App\Models\Employee;
 use App\Models\Prefecture;
 use Illuminate\Http\Request;
@@ -47,7 +49,7 @@ class EmployeeController extends Controller
             'birth_year'  => 'required|integer',
             'birth_month' => 'required|integer',
             'birth_day'   => 'required|integer',
-            'user_id' => 'nullable|exists:users,id',
+            'password' => 'required|min:8',
         ]);
 
         // 年/月/日を結合して birthday カラム用に変換
@@ -61,8 +63,30 @@ class EmployeeController extends Controller
         // 不要な birth_* を削除
         unset($validated['birth_year'], $validated['birth_month'], $validated['birth_day']);
 
-        // 保存
-        Employee::create($validated);
+        // トランザクション開始
+        DB::transaction(function () use ($validated) {
+
+            // 1. User作成
+            $user = User::create([
+                'email' => $validated['email'],
+                'password' => $validated['password'],
+            ]);
+
+            // 2. Employee作成
+            Employee::create([
+                'last_name' => $validated['last_name'],
+                'first_name' => $validated['first_name'],
+                'last_name_kana' => $validated['last_name_kana'] ?? null,
+                'first_name_kana' => $validated['first_name_kana'] ?? null,
+                'zip_code' => $validated['zip_code'] ?? null,
+                'prefecture_id' => $validated['prefecture_id'] ?? null,
+                'address' => $validated['address'] ?? null,
+                'phone' => $validated['phone'] ?? null,
+                'email' => $validated['email'] ?? null,
+                'birthday' => $validated['birthday'], // ← ここを修正
+                'user_id' => $user->id,
+            ]);
+        }); // ここでトランザクション終了。例外が出れば自動ロールバック
 
         return redirect()->route('employee.index')->with('success', '従業員を追加しました');
     }
@@ -70,7 +94,13 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request) {}
+    public function show($id)
+    {
+        // IDに対応する従業員を取得（存在しなければ404）
+        $employee = Employee::with('prefecture', 'user')->findOrFail($id);
+
+        return view('employee.show', compact('employee'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -101,6 +131,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $employee = Employee::findOrFail($id);
         $validated = $request->validate([
             'last_name' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
@@ -108,7 +139,7 @@ class EmployeeController extends Controller
             'prefecture_id' => 'nullable|integer|exists:m_prefecture,id',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'email' => 'nullable|email|max:255|unique:users,email,' . ($employee->user_id ?? 'NULL'),
             'birth_year'  => 'required|integer',
             'birth_month' => 'required|integer',
             'birth_day'   => 'required|integer',
@@ -123,8 +154,27 @@ class EmployeeController extends Controller
 
         unset($validated['birth_year'], $validated['birth_month'], $validated['birth_day']);
 
-        $employee = Employee::findOrFail($id);
-        $employee->update($validated);
+        DB::transaction(function () use ($validated, $employee) {
+
+            // 1. Employee更新
+            $employee->update([
+                'last_name' => $validated['last_name'],
+                'first_name' => $validated['first_name'],
+                'zip_code' => $validated['zip_code'] ?? null,
+                'prefecture_id' => $validated['prefecture_id'] ?? null,
+                'address' => $validated['address'] ?? null,
+                'phone' => $validated['phone'] ?? null,
+                'email' => $validated['email'] ?? null,
+                'birthday' => $validated['birthday'],
+            ]);
+
+            // 2. Userも更新（メールアドレスが変更された場合）
+            if ($employee->user) { // user_idがセットされている場合
+                $employee->user->update([
+                    'email' => $validated['email'], // 同期
+                ]);
+            }
+        });
 
         return redirect()->route('employee.index')->with('success', '従業員情報を更新しました');
     }
@@ -133,8 +183,11 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+
+        return redirect()->route('employee.index')->with('success', '従業員を削除しました');
     }
 }

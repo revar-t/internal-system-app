@@ -41,18 +41,18 @@
                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
             </div>
 
-    <div>
-        <label>都道府県</label>
-        <select name="prefecture_id">
-            <option value="">選択してください</option>
-            @foreach($prefectures as $pref)
-                <option value="{{ $pref->id }}"
-                    {{ old('prefecture_id', $employee->prefecture_id) == $pref->id ? 'selected' : '' }}>
-                    {{ $pref->name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+            <div>
+                <label>都道府県</label>
+                <select name="prefecture_id">
+                    <option value="">選択してください</option>
+                    @foreach ($prefectures as $pref)
+                        <option value="{{ $pref->id }}"
+                            {{ old('prefecture_id', $employee->prefecture_id) == $pref->id ? 'selected' : '' }}>
+                            {{ $pref->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700">住所</label>

@@ -71,6 +71,14 @@
             </div>
 
             <div>
+                <label class="block text-sm font-medium text-gray-700">パスワード</label>
+                <input type="password" name="password"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="8文字以上で入力">
+            </div>
+
+
+            <div>
                 <label class="block text-sm font-medium text-gray-700">生年月日</label>
                 <div class="flex space-x-2 mt-1">
                     <select name="birth_year"

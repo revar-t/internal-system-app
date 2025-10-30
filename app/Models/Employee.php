@@ -28,5 +28,8 @@ class Employee extends Model
     {
         return $this->belongsTo(Prefecture::class, 'prefecture_id', 'id');
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

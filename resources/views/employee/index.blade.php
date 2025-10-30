@@ -29,7 +29,7 @@
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($employees as $employee)
             <tr class="hover:bg-gray-50 cursor-pointer"
-                onclick="window.location='{{ route('employee.edit', $employee->id) }}'">
+                onclick="window.location='{{ route('employee.show', $employee->id) }}'">
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $employee->id }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $employee->last_name }} {{ $employee->first_name }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $employee->zip_code }}</td>
