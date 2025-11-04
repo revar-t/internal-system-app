@@ -15,10 +15,22 @@ Route::post('/login', function (Request $request) {
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
+    $user = $request->user();
+    $token = $user->createToken('api-token')->plainTextToken;
+
     return response()->json([
         'message' => 'Login successful',
-        'user' => $request->user(),
+        'token' => $token,
+        'user' => $user,
     ]);
+});
+
+// APIログアウト
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    // 現在のアクセストークンを削除
+    $request->user()->currentAccessToken()->delete();
+
+    return response()->json(['message' => 'Logged out successfully']);
 });
 
 // ログインユーザー取得
