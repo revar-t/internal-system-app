@@ -1,12 +1,21 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, useRoutes } from "react-router-dom";
+import { BrowserRouter, useLocation, useRoutes } from "react-router-dom";
 import "@/bootstrap";
 import { routes } from "./config/routes-config";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./config/theme-config";
+import Layout from "./components/Layout";
+import AppRoutes from "./components/AppRoutes";
 
-const AppRoutes = () => useRoutes(routes);
+const App = () => {
+  const location = useLocation();
+
+  // ログインページではLayoutを外す
+  const isAuthPage = location.pathname === "/login";
+
+  return isAuthPage ? <AppRoutes /> : <Layout />;
+};
 
 const rootElement = document.getElementById("app");
 if (rootElement) {
@@ -15,7 +24,7 @@ if (rootElement) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <AppRoutes />
+          <App />
         </BrowserRouter>
       </ThemeProvider>
     </React.StrictMode>

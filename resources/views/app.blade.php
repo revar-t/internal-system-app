@@ -8,7 +8,7 @@
     <title>Internal System</title>
 
     @viteReactRefresh
-    @vite('resources/ts/app.tsx')
+    @vite('resources/ts/App.tsx')
 </head>
 <body class="antialiased bg-gray-50">
     <div id="app"></div>
