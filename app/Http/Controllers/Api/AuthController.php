@@ -7,10 +7,6 @@ use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
-/**
- * @tags 認証API
- */
 class AuthController extends Controller
 {
     /**

@@ -1,29 +1,21 @@
 <?php
 
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        // すでにログイン済みならダッシュボードへ
-        return redirect()->route('dashboard');
+        // ログイン済みならReactアプリに遷移
+        return view('app');
     }
 
     // 未ログインならログイン画面へ
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // 従業員
-    Route::resource('/employee', EmployeeController::class);
-});
+// Reactアプリ用 catch-all ルート
+Route::middleware(['auth'])->get('/{any}', function () {
+    return view('app');
+})->where('any', '.*'); // どんなパスでもReactへ渡す
 
 require __DIR__.'/auth.php';
