@@ -2,8 +2,6 @@ import { routes } from "@/config/routes-config";
 import React from "react";
 import { useRoutes } from "react-router-dom";
 
-const AppRoutes: React.FC = () => {
+export default function AppRoutes() {
   return useRoutes(routes);
 };
-
-export default AppRoutes;

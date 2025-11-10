@@ -2,11 +2,12 @@ import React from "react";
 import { Drawer, List, ListItemButton, ListItemText } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 
-interface SidebarProps {
+type Props = {
   drawerWidth: number;
-}
+};
 
-const Sidebar: React.FC<SidebarProps> = ({ drawerWidth }) => {
+export default function Sidebar({ drawerWidth }: Props) {
+
   const location = useLocation();
 
   const menuItems = [
@@ -38,5 +39,3 @@ const Sidebar: React.FC<SidebarProps> = ({ drawerWidth }) => {
     </Drawer>
   );
 };
-
-export default Sidebar;

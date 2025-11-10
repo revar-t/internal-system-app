@@ -1,16 +1,14 @@
-import React from "react";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import React from 'react';
+import { AppBar, Toolbar, Typography } from '@mui/material';
 
-const Header: React.FC = () => {
+export default function Header() {
   return (
-    <AppBar position="fixed" elevation={1}>
+    <AppBar position='fixed' elevation={1}>
       <Toolbar>
-        <Typography variant="h6" noWrap component="div">
+        <Typography variant='h6' noWrap component='div'>
           社内システム
         </Typography>
       </Toolbar>
     </AppBar>
   );
-};
-
-export default Header;
+}
