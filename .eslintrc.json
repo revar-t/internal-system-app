@@ -1,0 +1,54 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:import/recommended",
+    "plugin:import/warnings"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "root": true,
+  "rules": {
+    "no-trailing-spaces": "warn",
+    "semi": ["warn", "always"],
+    "indent": ["warn", 2],
+    "import/no-unresolved": "off",
+    "comma-dangle": ["warn", "always-multiline"],
+    "import/no-named-as-default": "warn",
+    "import/order": [
+      "warn",
+      {
+        "alphabetize": {
+          "order": "asc"
+        }
+      }
+    ],
+    "no-unused-vars": "warn",
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "variable",
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      }
+    ],
+    "no-var": "warn",
+    "@typescript-eslint/no-unused-vars": "off"
+  },
+  "overrides": [
+    {
+      "files": ["*styled.ts", "./resources/ts/config/theme-config.ts"], // styled.ts ファイルに対してはキャメルケースの制限を設けない
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    }
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

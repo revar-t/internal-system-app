@@ -16,8 +16,7 @@ module.exports = [
       const dirs = input.split(path.sep);
       const lastDir = dirs.pop();
       const kebabCased = kebabCase(lastDir);
-      if (kebabCased !== lastDir)
-        return `ケバブケースで指定する必要があります。${kebabCased} と指定してください。`;
+      if (kebabCased !== lastDir) return `ケバブケースで指定する必要があります。${kebabCased} と指定してください。`;
 
       return true;
     },

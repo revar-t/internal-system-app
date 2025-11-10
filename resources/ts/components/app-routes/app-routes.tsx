@@ -1,7 +1,6 @@
-import { routes } from "@/config/routes-config";
-import React from "react";
-import { useRoutes } from "react-router-dom";
+import { useRoutes } from 'react-router-dom';
+import { routes } from '../../config/routes-config';
 
 export default function AppRoutes() {
   return useRoutes(routes);
-};
+}

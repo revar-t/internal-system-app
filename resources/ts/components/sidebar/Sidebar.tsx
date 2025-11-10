@@ -1,31 +1,29 @@
-import React from "react";
-import { Drawer, List, ListItemButton, ListItemText } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Drawer, List, ListItemButton, ListItemText } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
 
 type Props = {
   drawerWidth: number;
 };
 
 export default function Sidebar({ drawerWidth }: Props) {
-
   const location = useLocation();
 
   const menuItems = [
-    { text: "ダッシュボード", path: "/dashboard" },
-    { text: "従業員一覧", path: "/employee" },
+    { text: 'ダッシュボード', path: '/dashboard' },
+    { text: '従業員一覧', path: '/employee' },
   ];
 
   return (
     <Drawer
-      variant="permanent"
+      variant='permanent'
       sx={{
         width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
           width: drawerWidth,
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
           top: 64, // AppBar（Toolbar）の高さ
-          height: "calc(100% - 64px)",
+          height: 'calc(100% - 64px)',
         },
       }}
     >
@@ -38,4 +36,4 @@ export default function Sidebar({ drawerWidth }: Props) {
       </List>
     </Drawer>
   );
-};
+}

@@ -1,4 +1,3 @@
-// resources/ts/bootstrap.ts
 import axios from 'axios';
 
 /**
@@ -10,9 +9,9 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const tokenElement = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement | null;
 
 if (tokenElement) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = tokenElement.content;
+  axios.defaults.headers.common['X-CSRF-TOKEN'] = tokenElement.content;
 } else {
-    console.warn('⚠️ CSRF token not found: Please check <meta name="csrf-token" content="..."> is present.');
+  console.warn('⚠️ CSRF token not found: Please check <meta name="csrf-token" content="..."> is present.');
 }
 
 export { axios };

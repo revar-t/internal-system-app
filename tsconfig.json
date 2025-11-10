@@ -24,11 +24,6 @@
     "moduleDetection": "force",
     "noUncheckedSideEffectImports": true,
 
-    /* ===== パスエイリアス ===== */
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["resources/ts/*"]
-    }
   },
 
   /* ===== コンパイル対象 ===== */

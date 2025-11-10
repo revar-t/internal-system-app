@@ -16,7 +16,7 @@ export interface LoginResponse {
 
 // 🔹 Reduxの状態型
 export interface LoginState {
-  user: LoginResponse["user"] | null;
+  user: LoginResponse['user'] | null;
   loading: boolean;
   error: string | null;
 }

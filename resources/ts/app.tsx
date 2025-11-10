@@ -1,13 +1,12 @@
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, useLocation, useRoutes } from 'react-router-dom';
-import '@/bootstrap';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import theme from './config/theme-config';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import AppRoutes from './components/app-routes/app-routes';
 import Layout from './components/layout/layout';
+import theme from './config/theme-config';
+import { store } from './store/store';
 
 const App = () => {
   const location = useLocation();

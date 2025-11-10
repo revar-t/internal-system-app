@@ -1,7 +1,6 @@
-import React from 'react';
 import { Box, Toolbar } from '@mui/material';
-import Header from '../header/header';
 import AppRoutes from '../app-routes/app-routes';
+import Header from '../header/header';
 import Sidebar from '../sidebar/sidebar';
 
 const drawerWidth = 240;
