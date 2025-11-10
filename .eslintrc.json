@@ -38,6 +38,12 @@
   },
   "overrides": [
     {
+      "files": ["resources/ts/App.tsx"], // 除外したいファイルを指定
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    },
+    {
       "files": ["*styled.ts", "./resources/ts/config/theme-config.ts"], // styled.ts ファイルに対してはキャメルケースの制限を設けない
       "rules": {
         "@typescript-eslint/naming-convention": "off"

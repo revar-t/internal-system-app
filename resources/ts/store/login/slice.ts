@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 import type { LoginCredentials, LoginResponse, LoginState } from '../../types/login';
 
 const initialState: LoginState = {
@@ -13,8 +13,11 @@ export const login = createAsyncThunk('login/login', async (credentials: LoginCr
   try {
     const response = await axios.post<LoginResponse>('/api/login', credentials);
     return response.data.user; // 例: { id, name, email }
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || 'ログインに失敗しました');
+  } catch (err) {
+    if (isAxiosError(err)) {
+      return rejectWithValue(err.response?.data?.message || 'ログインに失敗しました');
+    }
+    return rejectWithValue('ログインに失敗しました');
   }
 });
 
