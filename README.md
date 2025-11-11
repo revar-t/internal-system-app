@@ -3,6 +3,7 @@
 ## ドキュメント
 
 - [Git 運用方針](docs/git.md)
+- [自動生成ファイル 使い方](docs/hygen.md)
 
 ## 開発環境
 
@@ -14,8 +15,8 @@
 
 ### フロントエンド
 
-- Blade
-- 将来的に React + TypeScript
+- React 19
+- TypeScript 5
 
 ### データベース
 
@@ -93,7 +94,7 @@ cp .env.example .env
 ## 補足
 
 - Laravel Breeze が導入済みなので、ログイン・登録機能はすぐ利用可能
-- 将来的に React + TypeScript を導入する場合は `resources/js` を React 化予定
+- 将来的に React + TypeScript を導入する場合は `resources/ts` を React 化予定
 - GitHub 上では `develop` ブランチで作業 → 安定後に `main` へマージ
 - Sail を使うことで Docker 上で PHP・MySQL 環境が統一されるため、チーム開発でも環境差を防げる
 - **エラーが出た場合は、エラーコードやログをコピーして ChatGPT に相談すると解決のヒントがもらえます**
