@@ -1,14 +1,19 @@
-import { Navigate } from 'react-router-dom';
-import Login from '../features/login/Login';
-// import Dashboard from "./pages/Dashboard";
-// import EmployeeList from "./pages/EmployeeList";
-// import EmployeeDetail from "./pages/EmployeeDetail";
+interface Route {
+  path: string;
+  menuLabel: string;
+};
 
-export const routes = [
-  { path: '/', element: <Navigate to='/login' replace /> },
-  { path: '/login', element: <Login /> },
-  //   { path: "/dashboard", element: <Dashboard /> },
-  //   { path: "/employee", element: <EmployeeList /> },
-  //   { path: "/employee/:id", element: <EmployeeDetail /> },
-  { path: '*', element: <Navigate to='/dashboard' replace /> },
-];
+interface Routes {
+  [key: string]: Route;
+};
+
+export const routes: Routes = {
+  login: {
+    path: '/',
+    menuLabel: 'ログイン',
+  },
+  dashboard: {
+    path: '/dashboard',
+    menuLabel: 'ダッシュボード',
+  },
+};

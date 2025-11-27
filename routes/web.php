@@ -16,6 +16,6 @@ Route::get('/', function () {
 // Reactアプリ用 catch-all ルート
 Route::middleware(['auth'])->get('/{any}', function () {
     return view('app');
-})->where('any', '.*'); // どんなパスでもReactへ渡す
+})->where('any', '^(?!.*docs/api).+$');
 
 require __DIR__.'/auth.php';

@@ -8,7 +8,7 @@
     <title>AdvanceDX</title>
 
     @viteReactRefresh
-    @vite('resources/ts/App.tsx')
+    @vite('resources/ts/index.tsx')
 </head>
 <body class="antialiased bg-gray-50">
     <div id="app"></div>

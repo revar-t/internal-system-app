@@ -1,13 +1,15 @@
-import { Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { login } from '../../store/login/slice';
+import P from '../../components/p';
+import theme from '../../config/theme-config';
+import { useDispatch, useSelector } from '../../hooks/custom-store';
+import { callLoginAsync } from '../../stores/login/slice';
 
-const Login = () => {
-  const dispatch = useAppDispatch();
+function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, loading, error } = useAppSelector((state) => state.login);
+  const { user, error } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,14 +23,12 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    dispatch(callLoginAsync({ email, password }));
   };
 
   return (
     <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100vh'>
-      <Typography variant='h5' gutterBottom>
-        ログイン
-      </Typography>
+      <P v='h4'>ログイン</P>
 
       <Box component='form' onSubmit={handleSubmit} sx={{ width: 300 }}>
         <TextField
@@ -48,13 +48,13 @@ const Login = () => {
         />
 
         {error && (
-          <Typography color='error' variant='body2'>
-            {error}
-          </Typography>
+          <P v='body2' sx={{ color: theme.palette.error.main }}>
+            ログインに失敗しました。もう一度お試しください
+          </P>
         )}
 
-        <Button type='submit' variant='contained' color='primary' fullWidth sx={{ mt: 2 }} disabled={loading}>
-          {loading ? <CircularProgress size={24} /> : 'ログイン'}
+        <Button type='submit' variant='contained' color='primary' fullWidth sx={{ mt: 2 }}>
+          ログイン
         </Button>
       </Box>
     </Box>
