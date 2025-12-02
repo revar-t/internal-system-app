@@ -16,6 +16,9 @@ export interface LoginResponse {
   };
   status: number;
 }
+export interface LogoutResponse {
+  status: number;
+}
 
 // 🔹 Reduxの状態型
 export interface LoginInitialState {

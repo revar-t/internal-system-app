@@ -10,6 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, error } = useSelector((state) => state.login);
+  console.log(user);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

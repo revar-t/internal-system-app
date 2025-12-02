@@ -28,6 +28,7 @@ export default function Layout({ currentPath, children }: Props) {
           sx={{
             flexGrow: 1,
             p: 3,
+            pt: isDisplayLayout ? '64px' : 3,
             backgroundColor: '#fafafa',
             overflowY: 'auto',
           }}

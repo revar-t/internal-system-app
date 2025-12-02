@@ -10,6 +10,14 @@ export const axios = customAxios.create({
   withCredentials: true,
 });
 
+axios.interceptors.request.use((config) => {
+  const token = sessionStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 axios.interceptors.response.use((response) => {
   // レスポンスオブジェクトのキーの値をキャメルケースに変換
   const camelCaseResponseData = camelCaseConverter(response.data as Record<string, unknown>);

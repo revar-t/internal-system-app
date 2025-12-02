@@ -1,10 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { callLogin, callLogout } from '../../features/login/api';
 import { createAsyncThunk } from '../../libs/toolkit';
-import type { LoginInitialState, LoginRequest, LoginResponse } from '../../types/login';
+import type { LoginInitialState, LoginRequest, LoginResponse, LogoutResponse } from '../../types/login';
 
+// F5リロードやタブ再読み込みでもログイン状態を維持するため、
+// sessionStorage から保存済みユーザー情報を取得する。
+// （Redux の state はリロードで初期化されるため、ここで復元する必要がある）
+const savedUser = sessionStorage.getItem('user');
+
+// Redux の初期状態。
+// sessionStorage に user があればログイン状態として扱い、
+// なければ通常どおり未ログイン（user: null）として開始する。
 const initialState: LoginInitialState = {
-  user: null,
+  user: savedUser ? JSON.parse(savedUser) : null,
   error: false,
 };
 
@@ -27,12 +35,16 @@ const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(callLoginAsync.fulfilled, (state, action) => {
-        const user = action.payload.data.user;
+        const {user, token} = action.payload.data;
         console.log(action.payload);
         state.user = user;
         const statusCode = action.payload.status;
         if(statusCode === 200) {
           sessionStorage.setItem('user_id', String(user.id));
+          sessionStorage.setItem('user', JSON.stringify(user));
+          if(token) {
+            sessionStorage.setItem('token', token);
+          }
         }
         state.error = false;
       })
@@ -42,6 +54,8 @@ const loginSlice = createSlice({
       .addCase(callLogoutAsync.fulfilled, (state) => {
         state.user = null;
         sessionStorage.removeItem('user_id');
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
       });
   },
 });
