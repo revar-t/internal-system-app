@@ -1,19 +1,16 @@
 import { Box, Button, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import P from '../../components/p';
 import theme from '../../config/theme-config';
 import { useDispatch, useSelector } from '../../hooks/custom-store';
-import { callLoginAsync } from '../../stores/login/slice';
+import { callLoginAsync, setEmail, setPassword } from '../../stores/login/slice';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, error } = useSelector((state) => state.login);
+  const { user, error, email, password } = useSelector((state) => state.login);
   console.log(user);
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   // ✅ ログイン成功時にダッシュボードへ
   useEffect(() => {
@@ -37,7 +34,7 @@ function Login() {
           margin='normal'
           label='メールアドレス'
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => dispatch(setEmail(e.target.value))}
         />
         <TextField
           fullWidth
@@ -45,7 +42,7 @@ function Login() {
           type='password'
           label='パスワード'
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => dispatch(setPassword(e.target.value))}
         />
 
         {error && (

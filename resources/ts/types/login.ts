@@ -1,3 +1,11 @@
+// 🔹 Reduxの状態型
+export interface LoginInitialState {
+  user: LoginResponse['data']['user'] | null;
+  error: boolean;
+  email: string;
+  password: string;
+}
+
 // 🔹 ログインフォーム入力値
 export interface LoginRequest {
   email: string;
@@ -16,12 +24,7 @@ export interface LoginResponse {
   };
   status: number;
 }
+
 export interface LogoutResponse {
   status: number;
-}
-
-// 🔹 Reduxの状態型
-export interface LoginInitialState {
-  user: LoginResponse['data']['user'] | null;
-  error: boolean;
 }

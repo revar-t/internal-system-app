@@ -1,8 +1,10 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../hooks/custom-store';
 import { callLogoutAsync } from '../../stores/login/slice';
+import Button from '../button';
+import P from '../p';
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -30,23 +32,16 @@ export default function Header() {
             alignItems: 'center',
           }}
         >
-          <Typography variant='h6' noWrap component='div'>
-            社内システム
-          </Typography>
+          <P v='h4'>社内システム</P>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              columnGap: '8px',
             }}
           >
-            <Typography variant='h6' noWrap component='div'>
-              {user?.email || ''}
-            </Typography>
-            <Box component='form' onSubmit={handleSubmit} sx={{ width: 180 }}>
-              <Button type='submit' variant='contained' color='primary' fullWidth>
-                ログアウト
-              </Button>
-            </Box>
+            <P>{user?.email || ''}</P>
+            <Button label='ログアウト' onClick={handleSubmit} color='secondary' />
           </Box>
         </Box>
       </Toolbar>

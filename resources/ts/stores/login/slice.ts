@@ -14,6 +14,8 @@ const savedUser = sessionStorage.getItem('user');
 const initialState: LoginInitialState = {
   user: savedUser ? JSON.parse(savedUser) : null,
   error: false,
+  email: '',
+  password: '',
 };
 
 export const callLoginAsync = createAsyncThunk<LoginRequest, LoginResponse>('login/callLogin', async (params) => {
@@ -31,6 +33,12 @@ const loginSlice = createSlice({
     logout(state) {
       state.user = null;
     },
+    setEmail(state, action) {
+      state.email = action.payload;
+    },
+    setPassword(state, action) {
+      state.password = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,6 +53,8 @@ const loginSlice = createSlice({
           if(token) {
             sessionStorage.setItem('token', token);
           }
+          state.email = '';
+          state.password = '';
         }
         state.error = false;
       })
@@ -60,5 +70,9 @@ const loginSlice = createSlice({
   },
 });
 
-export const { logout } = loginSlice.actions;
+export const {
+  logout,
+  setEmail,
+  setPassword,
+} = loginSlice.actions;
 export default loginSlice.reducer;
