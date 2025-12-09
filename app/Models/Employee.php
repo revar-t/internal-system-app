@@ -24,6 +24,11 @@ class Employee extends Model
         'user_id',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return $this->last_name . ' ' . $this->first_name;
+    }
+
     public function prefecture()
     {
         return $this->belongsTo(Prefecture::class, 'prefecture_id', 'id');
