@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { callLogin, callLogout } from '../../features/login/api';
 import { createAsyncThunk } from '../../libs/toolkit';
 import type { LoginInitialState, LoginRequest, LoginResponse, LogoutResponse } from '../../types/login';
@@ -30,14 +30,21 @@ const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
-    logout(state) {
+    logout: (state) => {
       state.user = null;
     },
-    setEmail(state, action) {
-      state.email = action.payload;
-    },
-    setPassword(state, action) {
-      state.password = action.payload;
+    // setEmail: (state, action) => {
+    //   state.email = action.payload;
+    // },
+    // setPassword: (state, action) => {
+    //   state.password = action.payload;
+    // },
+    setInputField: (state, action: PayloadAction<{
+      value: string;
+      inputFieldType: 'email' | 'password';
+    }>) => {
+      const { value, inputFieldType } = action.payload;
+      state[inputFieldType] = value;
     },
   },
   extraReducers: (builder) => {
@@ -72,7 +79,8 @@ const loginSlice = createSlice({
 
 export const {
   logout,
-  setEmail,
-  setPassword,
+  // setEmail,
+  // setPassword,
+  setInputField,
 } = loginSlice.actions;
 export default loginSlice.reducer;

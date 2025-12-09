@@ -1,6 +1,7 @@
 import { AppBar, Box, Toolbar } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { logoWhite } from '../../config/image-config';
 import { useDispatch, useSelector } from '../../hooks/custom-store';
 import { callLogoutAsync } from '../../stores/login/slice';
 import Button from '../button';
@@ -32,7 +33,7 @@ export default function Header() {
             alignItems: 'center',
           }}
         >
-          <P v='h4'>社内システム</P>
+          <Box component='img' src={logoWhite.src} alt={logoWhite.alt} sx={{ height: '36px' }} />
           <Box
             sx={{
               display: 'flex',

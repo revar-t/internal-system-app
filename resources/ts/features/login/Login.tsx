@@ -1,16 +1,17 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '../../components/button';
 import P from '../../components/p';
+import { logo } from '../../config/image-config';
 import theme from '../../config/theme-config';
 import { useDispatch, useSelector } from '../../hooks/custom-store';
-import { callLoginAsync, setEmail, setPassword } from '../../stores/login/slice';
+import { callLoginAsync, setInputField } from '../../stores/login/slice';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, error, email, password } = useSelector((state) => state.login);
-  console.log(user);
 
   // ✅ ログイン成功時にダッシュボードへ
   useEffect(() => {
@@ -19,6 +20,10 @@ function Login() {
     }
   }, [user, navigate]);
 
+  const dispatchSetInputField = (value: string, inputFieldType: 'email' | 'password') => {
+    dispatch(setInputField({ value, inputFieldType }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(callLoginAsync({ email, password }));
@@ -26,23 +31,22 @@ function Login() {
 
   return (
     <Box display='flex' flexDirection='column' alignItems='center' justifyContent='center' height='100vh'>
-      <P v='h4'>ログイン</P>
-
-      <Box component='form' onSubmit={handleSubmit} sx={{ width: 300 }}>
+      <Box component='img' src={logo.src} alt={logo.alt} sx={{ mb: '48px' }} />
+      <Box sx={{ width: 300 }}>
         <TextField
           fullWidth
-          margin='normal'
           label='メールアドレス'
           value={email}
-          onChange={(e) => dispatch(setEmail(e.target.value))}
+          onChange={(e) => dispatchSetInputField(e.target.value, 'email')}
+          sx={{ mb: '24px' }}
         />
         <TextField
           fullWidth
-          margin='normal'
           type='password'
           label='パスワード'
           value={password}
-          onChange={(e) => dispatch(setPassword(e.target.value))}
+          onChange={(e) => dispatchSetInputField(e.target.value, 'password')}
+          sx={{ mb: '24px' }}
         />
 
         {error && (
@@ -51,12 +55,10 @@ function Login() {
           </P>
         )}
 
-        <Button type='submit' variant='contained' color='primary' fullWidth sx={{ mt: 2 }}>
-          ログイン
-        </Button>
+        <Button label='ログイン' onClick={handleSubmit} sx={{ width: '100%' }} />
       </Box>
     </Box>
   );
-};
+}
 
 export default Login;
