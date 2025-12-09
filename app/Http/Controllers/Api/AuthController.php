@@ -28,6 +28,7 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        $user->load('employee');
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([

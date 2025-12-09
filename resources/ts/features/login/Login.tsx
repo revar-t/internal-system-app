@@ -48,7 +48,6 @@ function Login() {
           onChange={(e) => dispatchSetInputField(e.target.value, 'password')}
           sx={{ mb: '24px' }}
         />
-
         {error && (
           <P v='body2' sx={{ color: theme.palette.error.main }}>
             ログインに失敗しました。もう一度お試しください

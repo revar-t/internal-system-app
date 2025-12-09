@@ -38,10 +38,10 @@ export default function Header() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              columnGap: '8px',
+              columnGap: '32px',
             }}
           >
-            <P>{user?.email || ''}</P>
+            <P>{user?.name || ''}</P>
             <Button label='ログアウト' onClick={handleSubmit} color='secondary' />
           </Box>
         </Box>
